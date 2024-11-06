@@ -10,7 +10,7 @@ async function getAll() {
   return rows;
 }
 
-async function insertNew({ title, message, author_id }) {
+async function createNew({ title, message, author_id }) {
   const { rows } = await db.query(
     'INSERT INTO posts (title, message, author_id) VALUES ($1, $2, $3) RETURNING *',
     [title, message, author_id]
@@ -28,6 +28,6 @@ async function deleteById(id) {
 
 module.exports = {
   getAll,
-  insertNew,
+  createNew,
   deleteById
 };

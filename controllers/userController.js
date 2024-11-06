@@ -3,15 +3,17 @@ const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
 
 const validateCategory = [
-  body('name').trim()
-    .isLength({ min: 1, max: 200 }).withMessage(`Name must be between 1 and 200 characters`)
-    .matches(/^[a-z0-9 .,!?'-/]+$/i).withMessage('Name can only contain letters, numbers, and spaces'),
-  body('description').trim()
-    .optional({ nullable: true })
-    .if((value) => value !== null && value !== '')
-    .isLength({ max: 200 }).withMessage(`Description must not exceed 200 characters`)
-    .matches(/^[a-z0-9 .,!?'-/]+$/i).withMessage('Description contains invalid characters')
-    .escape()
+  body('first_name').trim()
+    .isLength({ max: 200 }).withMessage(`Name must not exceed 200 characters`)
+    .matches(/^[a-z0-9 '-]+$/i).withMessage('Name contains invalid characters'),
+  body('last_name').trim()
+    .isLength({ max: 200 }).withMessage(`Name must not exceed 200 characters`)
+    .matches(/^[a-z0-9 '-]+$/i).withMessage('Name contains invalid characters'),
+  body('username').trim()
+    .isEmail().withMessage(`Invalid email`),
+  body('password').trim()
+    .isLength({ min: 8 }).withMessage(`Password must be longer than 8 characters`)
+    .matches(/^[a-z0-9 .,!?'-/@#$%^&*]+$/i).withMessage('Password contains invalid characters')
 ];
 
 async function getUser(req, res) {
@@ -54,7 +56,7 @@ const createUser = [
       }
   
       const { first_name, last_name, username, password, is_admin } = req.body;
-      const newUser = await User.insertNew({ first_name, last_name, username, password, is_admin });
+      const newUser = await User.createNew({ first_name, last_name, username, password, is_admin });
       res.status(201).json({ message: 'User created successfully', user: newUser });
     } catch (error) {
       console.error('Error creating user:', error);
