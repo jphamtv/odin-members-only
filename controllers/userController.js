@@ -2,7 +2,7 @@
 const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
 
-const validateCategory = [
+const validateUser = [
   body('first_name').trim()
     .isLength({ max: 200 }).withMessage(`Name must not exceed 200 characters`)
     .matches(/^[a-z0-9 '-]+$/i).withMessage('Name contains invalid characters'),
