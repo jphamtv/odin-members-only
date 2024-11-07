@@ -2,12 +2,12 @@
 const db = require('./db');
 
 async function getByUsername(username) {
-  const { rows } = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+  const { rows } = await db.query("SELECT * FROM users WHERE username = $1", [username]);
   return rows[0] || null;
 }
 
 async function getById(id) {
-  const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+  const { rows } = await db.query("SELECT * FROM users WHERE id = $1", [id]);
   return rows[0] || null;
 }
 
