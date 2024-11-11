@@ -13,7 +13,9 @@ const validateUser = [
     .isEmail().withMessage(`Invalid email`),
   body('password').trim()
     .isLength({ min: 8 }).withMessage(`Password must be longer than 8 characters`)
-    .matches(/^[a-z0-9 .,!?'-/@#$%^&*]+$/i).withMessage('Password contains invalid characters')
+    .matches(/^[a-z0-9.,!?'-/@#$%^&*]+$/i).withMessage('Password contains invalid characters'),
+  body('confirm_password').trim()
+    .matches(body('password').trim).withMessage('Passwords must match')
 ];
 
 async function getUser(req, res) {
@@ -65,6 +67,22 @@ const createUser = [
   }
 ];
 
+async function updateUserMemberStatus(req, res) {
+  try {
+    const id = req.params.id;
+    const { is_member } = req.body;
+    const updatedItem = await User.updateMemberStatusById(id, { is_member });
+    if (updatedItem) {
+      res.json({ message: `User's member status updated successfully`, user: updatedItem });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error(`Error updating user's member status: `, error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 async function deleteUser(req, res) {
   try {
     const userId = req.params.id; 
@@ -84,5 +102,6 @@ async function deleteUser(req, res) {
 module.exports = {
   getUser,
   getUserById,
+  updateUserMemberStatus,
   deleteUser
 };

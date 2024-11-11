@@ -13,10 +13,20 @@ async function getById(id) {
 
 async function createNew({ first_name, last_name, username, password, is_admin }) {
   const { rows } = await db.query(
-    'INSERT INTO users (first_name, last_name, username, password, is_member, is_admin) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-    [first_name, last_name, username, password, is_member, is_admin]
+    'INSERT INTO users (first_name, last_name, username, password, is_admin) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+    [first_name, last_name, username, password, is_admin]
   );
   return rows[0];
+}
+
+async function updateMemberStatusById(id, { is_member }) {
+  const { rows } = await db.query(`
+    UPDATE users SET is_member = $1
+    WHERE id = $2
+    RETURNING *
+    `, [is_member, id]
+  );
+  return rows[0] || null;
 }
 
 async function deleteById(id) {
@@ -31,5 +41,6 @@ module.exports = {
   getByUsername,
   getById,
   createNew,
+  updateMemberStatusById,
   deleteById
 };
