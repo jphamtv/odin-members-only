@@ -1,6 +1,7 @@
 // controllers/userController.js
 const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 const validateUser = [
   body('first_name').trim()
@@ -13,9 +14,17 @@ const validateUser = [
     .isEmail().withMessage(`Invalid email`),
   body('password').trim()
     .isLength({ min: 8 }).withMessage(`Password must be longer than 8 characters`)
-    .matches(/^[a-z0-9.,!?'-/@#$%^&*]+$/i).withMessage('Password contains invalid characters'),
-  body('confirm_password').trim()
-    .matches(body('password').trim).withMessage('Passwords must match')
+    .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
+    .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
+    .matches(/[0-9]/).withMessage('Password must contain at least one number')
+    .matches(/[!@#$%^&*()_+-=[]{}|;:,.<>?]/).withMessage('Password must contain at least one special character'),
+  body('confirm_password').custom((value, { req }) => {
+    if (value === req.body.password) {
+      return true;
+    } else {
+      throw new Error(`Passwords do not match`)
+    }
+  })
 ];
 
 async function getUser(req, res) {
