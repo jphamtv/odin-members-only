@@ -34,7 +34,7 @@ const createPost = [
       }
   
       const { title, message } = req.body;
-      const author_id = req.params.id;
+      const author_id = req.user.id;
 
       const newPost = await Post.createNew({ title, message, author_id });
 

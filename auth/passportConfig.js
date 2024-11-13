@@ -10,7 +10,7 @@ function initialize() {
     new LocalStrategy(async (username, password, done) => {
       try {
         // Find user by username
-        const user = await User.getUser(username);  
+        const user = await User.getByUsername(username);  
         if (!user) {
           return done(null, false, { message: 'Incorrect username' });
         }

@@ -3,7 +3,7 @@ const db = require('./db');
 
 async function getAll() {
   const { rows } = await db.query(`
-    SELECT p.*, u.first_name + u.last_name as author
+    SELECT p.*, u.first_name || ' ' || u.last_name as author
     FROM posts p
     JOIN users u ON p.author_id = u.id
   `);
