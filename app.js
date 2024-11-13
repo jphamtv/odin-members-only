@@ -1,6 +1,7 @@
 // app.js
 const express = require('express');
 const path = require('node:path');
+const passport = require('passport');
 const passportConfig = require('./auth/passportConfig');
 
 const app = express();
