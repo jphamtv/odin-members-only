@@ -66,9 +66,11 @@ const createUser = [
         return res.status(400).json({ errors: errors.array() });
       }
   
-      const { first_name, last_name, username, password, is_admin } = req.body;
-      const newUser = await User.createNew({ first_name, last_name, username, password, is_admin });
-      res.status(201).json({ message: 'User created successfully', user: newUser });
+      const { first_name, last_name, username, is_admin } = req.body;
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const newUser = await User.createNew({ first_name, last_name, username, hashedPassword, is_admin });
+
+      res.redirect('/', { user: newUser });
     } catch (error) {
       console.error('Error creating user:', error);
       res.status(500).json({ error: 'Internal server error' });
@@ -111,6 +113,7 @@ async function deleteUser(req, res) {
 module.exports = {
   getUser,
   getUserById,
+  createUser,
   updateUserMemberStatus,
   deleteUser
 };
