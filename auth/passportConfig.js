@@ -35,7 +35,7 @@ function initialize() {
   
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = User.getUserById(id);
+      const user = User.getById(id);
       done(null, user);
     } catch (err) {
       done(err);

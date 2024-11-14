@@ -4,11 +4,12 @@ const router = Router();
 const passport = require('passport');
 const userController = require('../controllers/userController');
 
-router.get('/', (req, res) => {
-res.render('index', { user: req.user });
-});
+router.get('/', (req, res) => res.render('index', { user: req.user }));
 router.get('/sign-up', (req, res) => res.render('sign-up-form'));
 router.post('/sign-up', ...userController.createUser);
+router.get('/log-in', (req, res) => {
+  res.render('login', { message: req.query.message });
+});
 router.post(
   '/log-in',
   passport.authenticate('local', {

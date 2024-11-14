@@ -5,6 +5,7 @@ const path = require('node:path');
 const passport = require('passport');
 const usersRouter = require('./routes/usersRouter');
 const postsRouter = require('./routes/postsRouter');
+const initializePassport = require('./auth/passportConfig');
 
 const app = express();
 
@@ -18,6 +19,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
+// Initialize Passport
+initializePassport();
 
 // Passport middleware
 app.use(passport.initialize());
