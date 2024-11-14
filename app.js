@@ -6,7 +6,6 @@ const passport = require('passport');
 const usersRouter = require('./routes/usersRouter');
 const postsRouter = require('./routes/postsRouter');
 
-
 const app = express();
 
 // Views middleware

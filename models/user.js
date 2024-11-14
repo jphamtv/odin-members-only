@@ -13,7 +13,7 @@ async function getById(id) {
 
 async function createNew({ first_name, last_name, username, password, is_admin }) {
   const { rows } = await db.query(
-    'INSERT INTO users (first_name, last_name, username, password, is_admin) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+    'INSERT INTO users (first_name, last_name, username, password, is_admin) VALUES ($1, $2, $3, $4, $5) RETURNING *',
     [first_name, last_name, username, password, is_admin]
   );
   return rows[0];

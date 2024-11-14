@@ -17,7 +17,7 @@ const validateUser = [
     .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
     .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
     .matches(/[0-9]/).withMessage('Password must contain at least one number')
-    .matches(/[!@#$%^&*()_+-=[]{}|;:,.<>?]/).withMessage('Password must contain at least one special character'),
+    .matches(/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/).withMessage('Password must contain at least one special character'),
   body('confirm_password').custom((value, { req }) => {
     if (value === req.body.password) {
       return true;
@@ -68,14 +68,23 @@ const createUser = [
           user: {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
-            username: req.body.username
+            username: req.body.username,
+            is_admin: req.body.is_admin === 'true'
           }
         });
       }
   
-      const { first_name, last_name, username, is_admin } = req.body;
+      const { first_name, last_name, username } = req.body;
       const password = await bcrypt.hash(req.body.password, 10);
-      await User.createNew({ first_name, last_name, username, password, is_admin });
+      const is_admin = req.body.is_admin === 'true'; // Convert checkbox value to boolean
+
+      await User.createNew({
+        first_name,
+        last_name,
+        username,
+        password,
+        is_admin
+      });
 
       // Redirect to login with success message
       res.redirect('login?message=Registration successful! Please log in.');
@@ -86,7 +95,8 @@ const createUser = [
         user: {
           first_name: req.body.first_name,
           last_name: req.body.last_name,
-          username: req.body.username
+          username: req.body.username,
+          is_admin: req.body.is_admin === 'true'
         }
       });
     }

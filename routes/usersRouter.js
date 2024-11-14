@@ -1,6 +1,7 @@
 // routes/postsRouter.js
 const Router = require('express');
 const router = Router();
+const passport = require('passport');
 const userController = require('../controllers/userController');
 
 router.get('/', (req, res) => {
