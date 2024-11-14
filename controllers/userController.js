@@ -67,10 +67,10 @@ const createUser = [
       }
   
       const { first_name, last_name, username, is_admin } = req.body;
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const newUser = await User.createNew({ first_name, last_name, username, hashedPassword, is_admin });
+      const password = await bcrypt.hash(req.body.password, 10);
+      await User.createNew({ first_name, last_name, username, password, is_admin });
 
-      res.redirect('/', { user: newUser });
+      res.redirect('/');
     } catch (error) {
       console.error('Error creating user:', error);
       res.status(500).json({ error: 'Internal server error' });
