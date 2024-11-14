@@ -63,7 +63,7 @@ const createUser = [
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.render('sign-up-form', {
+        return res.render('sign-up', {
           errors: errors.array(),
           user: {
             first_name: req.body.first_name,
@@ -87,10 +87,10 @@ const createUser = [
       });
 
       // Redirect to login with success message
-      res.redirect('/login?message=Registration successful! Please log in.');
+      res.redirect('/log-in?message=Registration successful! Please log in.');
     } catch (error) {
       console.error('Error creating user:', error);
-      res.render('sign-up-form', {
+      res.render('sign-up', {
         errors: [{ msg: 'Error creating account. Please try again. ' }],
         user: {
           first_name: req.body.first_name,

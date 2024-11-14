@@ -13,6 +13,9 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Middleware to get req.body values
+app.use(express.urlencoded({ extended: false }));
+
 // Session middleware - MUST come before passport middleware
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -27,11 +30,8 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Middleware to get req.body values
-app.use(express.urlencoded({ extended: false }));
-
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
+  res.locals.user = req.user;
   next();
 });
 
