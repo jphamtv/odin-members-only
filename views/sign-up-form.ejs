@@ -3,25 +3,81 @@
 
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Sign Up</title>
 </head>
 
 <body>
   <h1>Sign Up</h1>
-  <form action="" method="POST">
-    <label for="first-name">First Name</label>
-    <input id="first-name" name="first-name" placeholder="First Name" type="text" />
-    <label for="last-name">Last Name</label>
-    <input id="last-name" name="last-name" placeholder="Last Name" type="text" />
-    <label for="username">Username</label>
-    <label for="username">Email</label>
-    <input id="username" name="username" placeholder="username" type="email" />
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" />
-    <label for="confirm-password">Confirm Password</label>
-    <input id="confirrm-password" name="confirm-password" type="password" />
-    <button>Sign Up</button>
+
+  <!-- Display validation errors if they exist -->
+  <% if (locals.errors) { %>
+    <ul class="errors">
+      <% errors.forEach(function(error) { %>
+        <li>
+          <%= error.msg %>
+        </li>
+        <% }); %>
+    </ul>
+  <% } %>
+
+  <form action="/sign-up" method="POST">
+    <div>
+      <label for="first_name">First Name</label>
+      <input 
+        id="first_name" 
+        name="first_name" 
+        placeholder="First Name" 
+        type="text"
+        value="<%= locals.user ? user.first_name : '' %>" 
+      />
+    </div>
+
+    <div>
+      <label for="last_name">Last Name</label>
+      <input 
+        id="last_name" 
+        name="last_name" 
+        placeholder="Last Name" 
+        type="text"
+        value="<%= locals.user ? user.last_name : '' %>" 
+      />
+    </div>
+
+    <div>
+      <label for="username">Email</label>
+      <input 
+        id="username" 
+        name="username" 
+        placeholder="email@example.com" 
+        type="email"
+        value="<%= locals.user ? user.username : '' %>" 
+      />
+    </div>
+
+    <div>
+      <label for="password">Password</label>
+      <input 
+        id="password" 
+        name="password" 
+        type="password" 
+      />
+    </div>
+
+    <div>
+      <label for="confirm_password">Confirm Password</label>
+      <input 
+        id="confirm_password" 
+        name="confirm_password" 
+        type="password" 
+      />
+    </div>
+
+    <button type="submit">Sign Up</button>
   </form>
+
+  <div>
+    <p>Already have an account? <a href="/login">Log in</a></p>
+  </div>
 </body>
 
 </html>

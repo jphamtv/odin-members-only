@@ -18,7 +18,7 @@ const validateUser = [
     .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
     .matches(/[0-9]/).withMessage('Password must contain at least one number')
     .matches(/[!@#$%^&*()_+-=[]{}|;:,.<>?]/).withMessage('Password must contain at least one special character'),
-  body('confirm-password').custom((value, { req }) => {
+  body('confirm_password').custom((value, { req }) => {
     if (value === req.body.password) {
       return true;
     } else {
@@ -63,17 +63,32 @@ const createUser = [
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.render('sign-up-form', {
+          errors: errors.array(),
+          user: {
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            username: req.body.username
+          }
+        });
       }
   
       const { first_name, last_name, username, is_admin } = req.body;
       const password = await bcrypt.hash(req.body.password, 10);
       await User.createNew({ first_name, last_name, username, password, is_admin });
 
-      res.redirect('/');
+      // Redirect to login with success message
+      res.redirect('login?message=Registration successful! Please log in.');
     } catch (error) {
       console.error('Error creating user:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.render('sign-up-form', {
+        errors: [{ msg: 'Error creating account. Please try again. ' }],
+        user: {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          username: req.body.username
+        }
+      });
     }
   }
 ];

@@ -7,14 +7,7 @@ router.get('/', (req, res) => {
 router.render('index', { user: req.user });
 });
 router.get('/sign-up', (req, res) => res.render('sign-up-form'));
-router.post('/sign-up', async (req, res, next) => {
-  try {
-    userController.createUser();
-    res.redirect('/');
-  } catch (err) {
-    return next(err);
-  }
-});
+router.post('/sign-up', ...userController.createUser);
 router.post(
   '/log-in',
   passport.authenticate('local', {
