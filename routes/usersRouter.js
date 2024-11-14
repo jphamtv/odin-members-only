@@ -5,7 +5,7 @@ const passport = require('passport');
 const userController = require('../controllers/userController');
 
 router.get('/', (req, res) => {
-router.render('index', { user: req.user });
+res.render('index', { user: req.user });
 });
 router.get('/sign-up', (req, res) => res.render('sign-up-form'));
 router.post('/sign-up', ...userController.createUser);
