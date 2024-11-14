@@ -3,6 +3,7 @@ const Router = require('express');
 const router = Router();
 const passport = require('passport');
 const userController = require('../controllers/userController');
+const postController = require('../controllers/postController');
 
 // Middleware
 function redirectIfAuthenticated(req, res, next) {
@@ -20,7 +21,12 @@ function ensureAuthenticated(req, res, next) {
 }
 
 // Public routes
-router.get('/', (req, res) => res.render('index'));
+router.get('/', async (req, res) => {
+  if (req.isAuthenticated()) {
+    return postController.getAllPosts(req, res);
+  }
+  res.render('index');
+});
 router.get('/sign-up', redirectIfAuthenticated, (req, res) => res.render('sign-up'));
 router.post('/sign-up', redirectIfAuthenticated, ...userController.createUser);
 router.get('/log-in', redirectIfAuthenticated, (req, res) => {

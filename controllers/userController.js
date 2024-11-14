@@ -89,7 +89,7 @@ const createUser = [
       });
 
       // Redirect to login with success message
-      res.redirect('/log-in?message=Registration successful! Please log in.');
+      res.redirect('/log-in', { message: 'Registration successful! Please log in.' });
     } catch (error) {
       console.error('Error creating user:', error);
       res.render('sign-up', {

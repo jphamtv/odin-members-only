@@ -14,17 +14,23 @@
       <a href="/log-out">Log Out</a>
     </div>
 
+    <a href="/posts/new">New Message</a>
+
     <!-- Messages -->
     <div class="messages">
-      <% messages.forEach((post)=> { %>
-        <div class="post">
-          <% if (locals.user.is_member) { %>
-            <div><%= post.author %></div>
-            <div><%= post.created_at %></div>
-          <% } %>
-            <div><%=post.message %></div>
-        </div>
-      <% }); %>
+      <% if (locals.messages && messages.length > 0) { %>
+        <% messages.forEach((post)=> { %>
+          <div class="post">
+            <% if (locals.user.is_member) { %>
+              <div><%= post.author %></div>
+              <div><%= post.created_at %></div>
+            <% } %>
+              <div><%=post.message %></div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No messages yet!</p>
+      <% } %>
     </div>
 
   <% } else { %>

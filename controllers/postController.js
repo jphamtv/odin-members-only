@@ -13,8 +13,8 @@ const validatePost = [
 async function getAllPosts(req, res) {
   try {
     const posts = await Post.getAll();
-    console.log(posts);
-    res.render('index', { messages: posts });
+    console.log('Posts retrieved: ', posts);
+    res.render('index', { messages: posts || [] });
   } catch (error) {
     console.error('Error fetching posts', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -25,6 +25,8 @@ const createPost = [
   validatePost,
   async (req, res) => {
     try {
+      console.log('Request body:', req.body);
+      console.log('User:', req.user);
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
