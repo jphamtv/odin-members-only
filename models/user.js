@@ -11,10 +11,10 @@ async function getById(id) {
   return rows[0] || null;
 }
 
-async function createNew({ first_name, last_name, username, password, is_admin }) {
+async function createNew({ first_name, last_name, username, password, is_admin, is_member }) {
   const { rows } = await db.query(
-    'INSERT INTO users (first_name, last_name, username, password, is_admin) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-    [first_name, last_name, username, password, is_admin]
+    'INSERT INTO users (first_name, last_name, username, password, is_admin, is_member) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+    [first_name, last_name, username, password, is_admin, is_member]
   );
   return rows[0];
 }

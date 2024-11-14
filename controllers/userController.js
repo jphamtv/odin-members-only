@@ -77,13 +77,15 @@ const createUser = [
       const { first_name, last_name, username } = req.body;
       const password = await bcrypt.hash(req.body.password, 10);
       const is_admin = req.body.is_admin === 'true'; // Convert checkbox value to boolean
+      const is_member = is_admin ? true : false;
 
       await User.createNew({
         first_name,
         last_name,
         username,
         password,
-        is_admin
+        is_admin,
+        is_member
       });
 
       // Redirect to login with success message
