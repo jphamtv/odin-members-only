@@ -14,9 +14,17 @@
       <a href="/log-out">Log Out</a>
     </div>
 
-    <!-- We'll add message display here -->
+    <!-- Messages -->
     <div class="messages">
-      <!-- Message list will go here -->
+      <% messages.forEach((post)=> { %>
+        <div class="post">
+          <% if (locals.user.is_member) { %>
+            <div><%= post.author %></div>
+            <div><%= post.created_at %></div>
+          <% } %>
+            <div><%=post.message %></div>
+        </div>
+      <% }); %>
     </div>
 
   <% } else { %>

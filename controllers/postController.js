@@ -13,7 +13,8 @@ const validatePost = [
 async function getAllPosts(req, res) {
   try {
     const posts = await Post.getAll();
-    res.json(posts);
+    console.log(posts);
+    res.render('index', { messages: posts });
   } catch (error) {
     console.error('Error fetching posts', error);
     res.status(500).json({ error: 'Internal server error' });
