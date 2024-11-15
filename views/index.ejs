@@ -21,7 +21,7 @@
       <% if (locals.messages && messages.length > 0) { %>
         <% messages.forEach((post)=> { %>
           <div class="post">
-            <% if (locals.user.is_member) { %>
+            <% if (locals.user.is_member || locals.user.id === post.author_id ) { %>
               <div><%= post.author %></div>
               <div><%= post.created_at %></div>
             <% } %>
