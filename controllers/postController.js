@@ -13,11 +13,10 @@ const validatePost = [
 async function getAllPosts(req, res) {
   try {
     const posts = await Post.getAll();
-    console.log('Posts retrieved: ', posts);
     res.render('index', { messages: posts || [] });
   } catch (error) {
     console.error('Error fetching posts', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.redirect('/?error=Error fetching posts');
   }
 }
 
@@ -44,7 +43,7 @@ const createPost = [
       res.redirect('/');
     } catch (error) {
       console.error('Error creating post:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.redirect('/?error=Error creating post');
     }
   }
 ];
@@ -52,16 +51,17 @@ const createPost = [
 async function deletePost(req, res) {
   try {
     const postId = req.params.id; 
+    console.log(postId);
     const deleted = await Post.deleteById(postId);    
 
     if (deleted) {
-      res.json({ message: 'Post deleted successfully' });
+      res.redirect('/');
     } else {
-      res.status(404).json({ message: 'Post not found' });
+      res.redirect('/?error=Post not found');
     }
   } catch (error) {
     console.error('Error deleting post: ', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.redirect('/?error=Error deleting post');
   }
 }
 

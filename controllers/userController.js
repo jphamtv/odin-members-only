@@ -89,7 +89,7 @@ const createUser = [
       });
 
       // Redirect to login with success message
-      res.redirect('/log-in', { message: 'Registration successful! Please log in.' });
+      res.redirect('/log-in?message=Registration successful! Please log in.');
     } catch (error) {
       console.error('Error creating user:', error);
       res.render('sign-up', {
@@ -107,7 +107,7 @@ const createUser = [
 
 async function updateUserMemberStatus(req, res) {
   try {
-    const id = req.params.id;
+    const id = req.user.id;
     const { is_member } = req.body;
     const updatedItem = await User.updateMemberStatusById(id, { is_member });
     if (updatedItem) {

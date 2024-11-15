@@ -16,6 +16,9 @@
 
     <a href="/posts/new">New Message</a>
 
+    <% if (locals.messages && messages.length> 0) { %>
+      <a href="/join-club">Become a Club Member</a>
+
     <!-- Messages -->
     <div class="messages">
       <% if (locals.messages && messages.length > 0) { %>
@@ -25,7 +28,14 @@
               <div><%= post.author %></div>
               <div><%= post.created_at %></div>
             <% } %>
+              <div><%=post.title %></div>
               <div><%=post.message %></div>
+            <% if (locals.user.is_admin) { %>
+              <form action="/posts/delete/<%= post.id %>" method="POST" style="display: inline;">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Delete Message</button>
+              </form>
+            <% } %>
           </div>
         <% }); %>
       <% } else { %>
