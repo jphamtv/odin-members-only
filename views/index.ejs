@@ -16,8 +16,9 @@
 
     <a href="/posts/new">New Message</a>
 
-    <% if (locals.messages && messages.length> 0) { %>
+    <% if (!locals.user.is_member) { %>
       <a href="/join-club">Become a Club Member</a>
+    <% } %>
 
     <!-- Messages -->
     <div class="messages">

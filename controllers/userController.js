@@ -2,6 +2,7 @@
 const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 const validateUser = [
   body('first_name').trim()
@@ -105,20 +106,26 @@ const createUser = [
   }
 ];
 
-async function updateUserMemberStatus(req, res) {
-  try {
-    const id = req.user.id;
-    const { is_member } = req.body;
-    const updatedItem = await User.updateMemberStatusById(id, { is_member });
-    if (updatedItem) {
-      res.json({ message: `User's member status updated successfully`, user: updatedItem });
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error) {
-    console.error(`Error updating user's member status: `, error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+async function updateMemberStatus(req, res) {
+ const redirectPath = '/join-club';
+ 
+ try {
+   if (req.body.password !== process.env.CLUB_MEMBERSHIP_PASSCODE) {
+     return res.redirect(`${redirectPath}?error=Invalid credentials`);
+   }
+
+   const updatedUser = await User.updateMemberStatusById(req.user.id, { is_member: true });
+   
+   if (!updatedUser) {
+     return res.redirect(`${redirectPath}?error=Something went wrong`);
+   }
+
+   res.redirect(`/`);
+
+ } catch (error) {
+   console.error('Club membership error:', error);
+   res.redirect(`${redirectPath}?error=Something went wrong`);
+ }
 }
 
 async function deleteUser(req, res) {
@@ -141,6 +148,6 @@ module.exports = {
   getUser,
   getUserById,
   createUser,
-  updateUserMemberStatus,
+  updateMemberStatus,
   deleteUser
 };

@@ -27,7 +27,8 @@ router.get('/', async (req, res) => {
   }
   res.render('index');
 });
-router.get('/join-club', ensureAuthenticated, userController.updateUserMemberStatus);
+router.get('/join-club', ensureAuthenticated, (req, res) => res.render('join-club'));
+router.post('/join-club', ensureAuthenticated, userController.updateMemberStatus);
 router.get('/sign-up', redirectIfAuthenticated, (req, res) => res.render('sign-up'));
 router.post('/sign-up', redirectIfAuthenticated, ...userController.createUser);
 router.get('/log-in', redirectIfAuthenticated, (req, res) => {
