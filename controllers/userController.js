@@ -28,36 +28,6 @@ const validateUser = [
   })
 ];
 
-async function getUser(req, res) {
-  try {
-    const { username } = req.body;
-    const user = await User.getByUsername(username);
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error) {
-    console.error('Error fetching user: ', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
-async function getUserById(req, res) {
-  try {
-    const userId = req.params.id;
-    const user = await User.getById(userId);
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error) {
-    console.error('Error fetching user: ', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
 const createUser = [
   validateUser,
   async (req, res) => {
@@ -128,26 +98,7 @@ async function updateMemberStatus(req, res) {
  }
 }
 
-async function deleteUser(req, res) {
-  try {
-    const userId = req.params.id; 
-    const deleted = await User.deleteById(userId);    
-
-    if (deleted) {
-      res.json({ message: 'User deleted successfully' });
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error) {
-    console.error('Error deleting user: ', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
 module.exports = {
-  getUser,
-  getUserById,
   createUser,
   updateMemberStatus,
-  deleteUser
 };

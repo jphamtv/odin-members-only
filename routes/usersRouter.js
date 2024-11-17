@@ -27,20 +27,20 @@ router.get('/', async (req, res) => {
   }
   res.render('index');
 });
-router.get('/join-club', ensureAuthenticated, (req, res) => res.render('join-club'));
-router.post('/join-club', ensureAuthenticated, userController.updateMemberStatus);
 router.get('/sign-up', redirectIfAuthenticated, (req, res) => res.render('sign-up'));
 router.post('/sign-up', redirectIfAuthenticated, ...userController.createUser);
 router.get('/log-in', redirectIfAuthenticated, (req, res) => {
   res.render('login', { message: req.query.message });
 });
 router.post('/log-in', redirectIfAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/log-in'
-  })
+  successRedirect: '/',
+  failureRedirect: '/log-in'
+})
 );
 
-// Protected route
+// Protected routes
+router.get('/join-club', ensureAuthenticated, (req, res) => res.render('join-club'));
+router.post('/join-club', ensureAuthenticated, userController.updateMemberStatus);
 router.get('/log-out', ensureAuthenticated, (req, res, next) => {
   req.logout((err) => {
     if (err) {

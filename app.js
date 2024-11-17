@@ -17,14 +17,14 @@ app.set('view engine', 'ejs');
 // Middleware to get req.body values
 app.use(express.urlencoded({ extended: false }));
 
-// Middleware to override standard HTML method and use DELETE method
+// Middleware to use DELETE method (overrides standard HTML GET/POST method)
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     return req.body._method;
   }
 }));
 
-// Session middleware - MUST come before passport middleware
+// Session middleware (MUST come before passport middleware)
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
