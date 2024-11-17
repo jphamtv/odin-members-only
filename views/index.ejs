@@ -4,30 +4,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Members Only</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
   <% if (locals.user) { %>
     <div class="header">
-      <h1>Welcome <%= user.first_name %>
-      </h1>
-      <a href="/log-out">Log Out</a>
+      <h1>Message Board</h1>
+      <div>Welcome <%= user.first_name %>  <a href="/log-out">Log Out</a></div>
     </div>
 
-    <a href="/posts/new">New Message</a>
-
     <% if (!locals.user.is_member) { %>
-      <a href="/join-club">Become a Club Member</a>
+      <div class="banner"> Become a member to see message details 
+        <a href="/join-club">Join Today</a>
+      </div>
     <% } %>
-
+      
+    
     <!-- Messages -->
     <div class="messages">
+      <a class="new-message" href="/posts/new">New Message</a>
       <% if (locals.messages && messages.length > 0) { %>
         <% messages.forEach((post)=> { %>
           <div class="post">
             <% if (locals.user.is_member || locals.user.id === post.author_id ) { %>
-              <div><%= post.author %></div>
-              <div><%= post.created_at %></div>
+              <div class="top-row">
+                <div class="author"><%= post.author %></div>
+                <div class="date"><%= post.created_at %></div>
+              </div>
             <% } %>
               <div><%=post.title %></div>
               <div><%=post.message %></div>

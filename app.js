@@ -10,14 +10,18 @@ const initializePassport = require('./auth/passportConfig');
 
 const app = express();
 
-// Views middleware
+// Enable EJS as view engine and look for templates in 'views' directory
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Middleware to get req.body values
+// Enable static assets and look for assets in the 'public' directory
+const assetsPath = path.join(__dirname, 'public');
+app.use(express.static(assetsPath));
+
+// Parses form payloads and sets it to the 'req.body'
 app.use(express.urlencoded({ extended: false }));
 
-// Middleware to use DELETE method (overrides standard HTML GET/POST method)
+// Overrides standard HTML GET/POST method in order to use DELETE method
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     return req.body._method;
