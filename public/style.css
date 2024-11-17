@@ -31,7 +31,8 @@ a {
   margin: 2rem 0;
 }
 
-.new-message {
+.new-message,
+.delete-button {
   display: flex;
   justify-content: flex-end;
 }
@@ -55,4 +56,16 @@ a {
 
 .date {
   color: #a7a7a7;
+}
+
+button {
+  background-color: #323232;
+  color: #a7a7a7;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+button:hover {
+  color: #fff
 }
