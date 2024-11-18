@@ -31,7 +31,12 @@ a {
   margin: 2rem 0;
 }
 
-.new-message,
+.welcome {
+  margin: 2rem 0;
+  text-align: center  ;
+}
+
+.new-message-button,
 .delete-button {
   display: flex;
   justify-content: flex-end;
@@ -47,11 +52,18 @@ a {
 .top-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #323232;
 }
 
 .author {
   font-weight: bold;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .date {
@@ -68,4 +80,57 @@ button {
 
 button:hover {
   color: #fff
+}
+
+.login-form {
+  margin: 2rem 0;
+}
+
+form,
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 8px;
+}
+
+input,
+textarea {
+  margin-bottom: 16px;
+  height: 24px;
+  background-color: #262626;
+  border-radius: 4px;
+  border: 1px solid #525252;
+  padding: 8px;
+  color: #fff;
+}
+
+textarea {
+  min-height: 120px;
+  line-height: 1.25;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+input[type="checkbox"] {
+  margin-bottom: 0;
+  height: 16px;
+  width: 16px;
+}
+
+.login,
+.signup,
+.new-message {
+  max-width: 350px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 24px;
 }

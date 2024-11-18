@@ -8,13 +8,18 @@
 </head>
 
 <body>
-  <h1>New Message</h1>
-
-    <form action="/posts/new" method="POST">
-      <input id="title" name="title" type="text" placeholder="Title"/>
-      <textarea id="message" name="message" type="textarea" placeholder="Message"></textarea>
-      <button>Submit</button>
-    </form>
+  <div class="new-message">
+    <h1>New Message</h1>
+    <div class="new-message-form">
+      <form action="/posts/new" method="POST">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" />
+        <label for="message">Message</label>
+        <textarea id="message" name="message" type="textarea"></textarea>
+        <button>Submit</button>
+      </form>
+    </div>
+  </div>
 
 </body>
 

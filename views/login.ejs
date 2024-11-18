@@ -8,25 +8,27 @@
 </head>
 
 <body>
-  <h1>Login</h1>
+  <div class="login">
+    <h1>Login</h1>
 
-  <!-- Show any success/error messages -->
-  <% if (locals.message) { %>
-    <div class="message">
-      <%= message %>
+    <!-- Show any success/error messages -->
+    <% if (locals.message) { %>
+      <div class="message">
+        <%= message %>
+      </div>
+    <% } %>
+
+    <form action="/log-in" method="POST">
+      <label for="username">Email</label>
+      <input id="username" name="username" type="email" />
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" />
+      <button>Log In</button>
+    </form>
+  
+    <div>
+      <p>Don't have an account? <a href="/sign-up">Sign up</a></p>
     </div>
-  <% } %>
-
-  <form action="/log-in" method="POST">
-    <label for="username">Email</label>
-    <input id="username" name="username" placeholder="username" type="email" />
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" />
-    <button>Log In</button>
-  </form>
-
-  <div>
-    <p>Don't have an account? <a href="/sign-up">Sign up</a></p>
   </div>
 </body>
 

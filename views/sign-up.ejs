@@ -8,83 +8,82 @@
 </head>
 
 <body>
-  <h1>Sign Up</h1>
-
-  <!-- Display validation errors if they exist -->
-  <% if (locals.errors) { %>
-    <ul class="errors">
-      <% errors.forEach(function(error) { %>
-        <li>
-          <%= error.msg %>
-        </li>
-        <% }); %>
-    </ul>
-  <% } %>
-
-  <form action="/sign-up" method="POST">
+  <div class="signup">
+    <h1>Sign Up</h1>
+  
+    <!-- Display validation errors if they exist -->
+    <% if (locals.errors) { %>
+      <ul class="errors">
+        <% errors.forEach(function(error) { %>
+          <li>
+            <%= error.msg %>
+          </li>
+          <% }); %>
+      </ul>
+    <% } %>
+  
+    <form action="/sign-up" method="POST">
+      <div class="form">
+        <label for="first_name">First Name</label>
+        <input 
+          id="first_name" 
+          name="first_name" 
+          type="text"
+          value="<%= locals.user ? user.first_name : '' %>" 
+        />
+      </div>
+  
+      <div class="form">
+        <label for="last_name">Last Name</label>
+        <input 
+          id="last_name" 
+          name="last_name" 
+          type="text"
+          value="<%= locals.user ? user.last_name : '' %>" 
+        />
+      </div>
+  
+      <div class="form">
+        <label for="username">Email</label>
+        <input 
+          id="username" 
+          name="username" 
+          type="email"
+          value="<%= locals.user ? user.username : '' %>" 
+        />
+      </div>
+  
+      <div class="form">
+        <label for="password">Password</label>
+        <input 
+          id="password" 
+          name="password" 
+          type="password" 
+        />
+      </div>
+  
+      <div class="form">
+        <label for="confirm_password">Confirm Password</label>
+        <input 
+          id="confirm_password" 
+          name="confirm_password" 
+          type="password" 
+        />
+      </div>
+  
+      <div>
+        <label class="checkbox">
+          <input id="is_admin" name="is_admin" type="checkbox" value="true" />
+          <div>Admin Account</div>
+        </label>
+      </div>
+  
+      <button type="submit">Sign Up</button>
+    </form>
+  
     <div>
-      <label for="first_name">First Name</label>
-      <input 
-        id="first_name" 
-        name="first_name" 
-        placeholder="First Name" 
-        type="text"
-        value="<%= locals.user ? user.first_name : '' %>" 
-      />
+      <p>Already have an account? <a href="/log-in">Log in</a></p>
     </div>
-
-    <div>
-      <label for="last_name">Last Name</label>
-      <input 
-        id="last_name" 
-        name="last_name" 
-        placeholder="Last Name" 
-        type="text"
-        value="<%= locals.user ? user.last_name : '' %>" 
-      />
-    </div>
-
-    <div>
-      <label for="username">Email</label>
-      <input 
-        id="username" 
-        name="username" 
-        placeholder="email@example.com" 
-        type="email"
-        value="<%= locals.user ? user.username : '' %>" 
-      />
-    </div>
-
-    <div>
-      <label for="password">Password</label>
-      <input 
-        id="password" 
-        name="password" 
-        type="password" 
-      />
-    </div>
-
-    <div>
-      <label for="confirm_password">Confirm Password</label>
-      <input 
-        id="confirm_password" 
-        name="confirm_password" 
-        type="password" 
-      />
-    </div>
-
-    <div>
-      <label for="is_admin">
-        <input id="is_admin" name="is_admin" type="checkbox" value="true" />
-        Admin Account
-      </label>
-    </div>
-
-    <button type="submit">Sign Up</button>
-  </form>
-
-  <div>
-    <p>Already have an account? <a href="/log-in">Log in</a></p>
   </div>
 </body>
 

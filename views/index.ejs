@@ -15,7 +15,7 @@
     </div>
 
     <% if (!locals.user.is_member) { %>
-      <div class="banner"> Become a member to see message details 
+      <div class="banner"> Become a member to see the message's author and date posted. 
         <a href="/join-club">Join Today</a>
       </div>
     <% } %>
@@ -23,17 +23,22 @@
     
     <!-- Messages -->
     <div class="messages">
-      <a class="new-message" href="/posts/new">New Message</a>
+      <a class="new-message-button" href="/posts/new">New Message</a>
       <% if (locals.messages && messages.length > 0) { %>
         <% messages.forEach((post)=> { %>
           <div class="post">
-            <% if (locals.user.is_member || locals.user.id === post.author_id ) { %>
+            <% if (locals.user.is_member || locals.user.id === post.author_id) { %>
               <div class="top-row">
                 <div class="author"><%= post.author %></div>
                 <div class="date"><%= post.created_at %></div>
               </div>
+            <% } else { %>
+              <div class="top-row">
+                <div class="author">Anonymous</div>
+                <div class="date"></div>
+              </div>
             <% } %>
-              <div><%=post.title %></div>
+              <div class="title"><%=post.title %></div>
               <div><%=post.message %></div>
             <% if (locals.user.is_admin) { %>
               <div class="delete-button">
@@ -51,8 +56,10 @@
     </div>
 
   <% } else { %>
-    <h1>Welcome to Members Only</h1>
-    <p>Please <a href="/log-in">log in</a> or <a href="/sign-up">sign up</a> to continue.</p>
+    <div class="welcome">
+      <h1>Welcome to Members Only</h1>
+      <p>Please <a href="/log-in">log in</a> or <a href="/sign-up">sign up</a> to continue.</p>
+    </div>
   <% } %>
 </body>
 

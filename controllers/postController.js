@@ -24,8 +24,6 @@ const createPost = [
   validatePost,
   async (req, res) => {
     try {
-      console.log('Request body:', req.body);
-      console.log('User:', req.user);
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -51,7 +49,6 @@ const createPost = [
 async function deletePost(req, res) {
   try {
     const postId = req.params.id; 
-    console.log(postId);
     const deleted = await Post.deleteById(postId);    
 
     if (deleted) {
