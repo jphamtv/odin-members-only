@@ -1,5 +1,6 @@
 // controllers/postController.js
 const Post = require('../models/post');
+const formatMessageDateTime = require('../utils/dateFormatter');
 const { body, validationResult } = require('express-validator');
 
 const validatePost = [
@@ -13,7 +14,14 @@ const validatePost = [
 async function getAllPosts(req, res) {
   try {
     const posts = await Post.getAll();
-    res.render('index', { messages: posts || [] });
+
+    // Format dates for each post
+    const formattedPosts = posts?.map(post => ({
+      ...post,
+      created_at: formatMessageDateTime(post.created_at)
+    })) || [];
+
+    res.render('index', { messages: formattedPosts });
   } catch (error) {
     console.error('Error fetching posts', error);
     res.redirect('/?error=Error fetching posts');
