@@ -1,1 +1,1 @@
-[# odin-members-only](https://www.theodinproject.com/lessons/node-path-nodejs-members-only)
+[Members Only Project](https://www.theodinproject.com/lessons/node-path-nodejs-members-only)
